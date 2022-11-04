@@ -17,7 +17,7 @@ from rest_framework import generics
 from chatbotAPI.messenger import Messenger
 
 
-ACCESS_TOKEN = os.environ["ACCESS_TOKEN"]
+ACCESS_TOKEN = "xxxx" #os.environ["ACCESS_TOKEN"]
 VERYFY_TOKEN = 'uetgetnews'
 
 
