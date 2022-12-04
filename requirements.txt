@@ -4,3 +4,4 @@ djangorestframework==3.14.0
 messengerbot==0.1.4
 requests==2.28.1
 urllib3==1.26.12
+celery==5.2.7
