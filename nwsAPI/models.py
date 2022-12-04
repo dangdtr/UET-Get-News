@@ -11,6 +11,7 @@ class Nws(models.Model):
     title = models.CharField(max_length=200)
     nws_url = models.CharField(max_length=200)
     img_url = models.CharField(max_length=200)
+    des = models.CharField(max_length=300)
     time = models.DateTimeField(default=django.utils.timezone.now)#, auto_now_add=True)
 
     def __str__(self):
@@ -21,6 +22,7 @@ class StpNws(models.Model):
     title = models.CharField(max_length=200)
     nws_url = models.CharField(max_length=200)
     img_url = models.CharField(max_length=200)
+    des = models.CharField(max_length=300)
 
     def __str__(self):
         return self.title

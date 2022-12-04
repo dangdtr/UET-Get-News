@@ -5,4 +5,4 @@ migrate:
 celery:
 	celery -A dwnpptool worker -l info
 run:
-	python3 manage.py runserver
+	python3 manage.py runserver 8888

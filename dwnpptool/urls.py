@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('current/', nwsViews.ListNwsView.as_view()),
     path('detected/', nwsViews.ListStpNwsView.as_view()),
-    path('', cbViews.ChatBotView.as_view()),
+    path('webhook/', cbViews.ChatBotView.as_view()),
     path('subscriber/', cbViews.ListSubscriberView.as_view())
     
     

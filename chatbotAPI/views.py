@@ -14,10 +14,10 @@ from .models import Subscriber
 from .serializers import SubscriberSerializer
 from rest_framework import generics
 
+# from chatbotAPI.messenger import Messenger
 from chatbotAPI.messenger import Messenger
 
-
-ACCESS_TOKEN = "xxxx" #os.environ["ACCESS_TOKEN"]
+ACCESS_TOKEN = os.environ["ACCESS_TOKEN"]
 VERYFY_TOKEN = 'uetgetnews'
 
 
@@ -39,7 +39,7 @@ class ChatBotView(generic.View):
             for nws in stp_nws:
 
                 template = messenger.create_message_template(nws['title'], nws['nws_url'], nws['img_url'],
-                                                             'subtitle')
+                                                             nws['des'])
 
                 for sub in sub_list:
                     messenger.send_message(sub['user_id'], template)
@@ -85,13 +85,12 @@ class ChatBotView(generic.View):
 
                                 nws = Nws.objects.filter(id=0).get()
                                 template = messenger.create_message_template(nws.title, nws.nws_url, nws.img_url,
-                                                                             'subtitle')
+                                                                             nws.des)
                                 messenger.send_message(sender_id, template)
 
                             if messaging_event["postback"]["payload"] == "SIGNUP":
                                 if not Subscriber.objects.filter(user_id=sender_id).exists():
-                                    user_info = messenger.get_user_info(
-                                        sender_id)
+                                    user_info = messenger.get_user_info(sender_id)
                                     Subscriber.objects.create(
                                         user_id=sender_id,
                                         first_name=user_info['first_name'],
