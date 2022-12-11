@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 from time import sleep
 from celery import shared_task
@@ -52,6 +53,7 @@ def create_nws():
         bs = BeautifulSoup(page.content, "xml")
         idx = 0
 
+        del page
         items = bs.find_all("item")
         for item in items:
 
@@ -76,6 +78,7 @@ def create_nws():
         update_nws()
 
     print("\nDone!")
+    print(datetime.now())
 
 
 @shared_task
@@ -99,6 +102,7 @@ def update_nws():
             continue
 
     bs = BeautifulSoup(page.content, "xml")
+    del page
 
     first_element = bs.find('item')
 
@@ -148,19 +152,21 @@ def update_nws():
             # update nws to db
             for val in new_data:
                 Nws.objects.filter(id=val['id']).update(**val)
+    print(datetime.now())
     print("Done!. Waiting 120...")
+    
 
 
 @shared_task
 def send_noti():
     chat_id = "-1001569650376"
     if len(StpNws.objects.values()) != 0:
-        data = Nws.objects.values()
+        data = StpNws.objects.values()
         for val in data:
             url = val['nws_url']
-            response = requests.get(
-                f"https://api.telegram.org/bot{API_KEY}/sendMessage?chat_id={chat_id}&text={url}")
-            print("Sent noti!: ", response.json())
+            # response = requests.get(
+            #     f"https://api.telegram.org/bot{API_KEY}/sendMessage?chat_id={chat_id}&text={url}")
+            # print("Sent noti!: ", response.json())
 
             users = Subscriber.objects.values()
             for user in users:
