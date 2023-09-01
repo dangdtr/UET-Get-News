@@ -1,1 +1,1 @@
-UET Get News Tool by SGUETer :D
+# UET Get News Tool by SGUETer :D
